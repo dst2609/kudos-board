@@ -1,0 +1,23 @@
+// schema.prisma
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Board {
+  id    Int     @id @default(autoincrement())
+  name  String
+  cards Card[]
+}
+
+model Card {
+  id      Int    @id @default(autoincrement())
+  title   String
+  content String
+  board   Board  @relation(fields: [boardId], references: [id])
+  boardId Int
+}
